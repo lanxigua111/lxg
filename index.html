@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>林语晨 | 创意开发者 · 个人主页</title>
+    <!-- Google Fonts & Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fefefe;
+            color: #1e2a3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 滚动偏移避免固定导航栏遮挡 */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 85px;
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eef2f5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 12px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* 全局容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ----- 导航栏 (固定 + 毛玻璃) ----- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            z-index: 1000;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.9rem 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            transition: 0.2s;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #1f2937;
+            transition: 0.2s;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #2563eb;
+            transition: width 0.25s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 响应式导航 */
+        @media (max-width: 680px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 0.8rem 24px;
+            }
+            .nav-links {
+                gap: 1.5rem;
+                justify-content: center;
+            }
+            html {
+                scroll-padding-top: 115px;
+            }
+        }
+
+        /* 通用区块样式 */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: -0.3px;
+            position: relative;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            border-radius: 4px;
+            margin: 0.7rem auto 0;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+        .btn-outline:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* 英雄区 Hero */
+        .hero {
+            padding-top: 7rem;
+            padding-bottom: 4rem;
+            background: linear-gradient(145deg, #fafcff 0%, #f0f4fe 100%);
+        }
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .avatar {
+            width: 130px;
+            height: 130px;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        .avatar i {
+            font-size: 5rem;
+            color: #1e3a8a;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #1e293b, #2563eb);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .hero-tag {
+            font-size: 1.3rem;
+            color: #4b5563;
+            margin: 1rem 0 0.5rem;
+            font-weight: 500;
+        }
+        .hero-desc {
+            max-width: 600px;
+            margin: 1rem auto 2rem;
+            color: #334155;
+            font-size: 1.05rem;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* 关于区域 */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        .about-text p {
+            margin-bottom: 1.2rem;
+            color: #2d3a48;
+            font-size: 1.02rem;
+        }
+        .info-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .info-list li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .info-list i {
+            width: 28px;
+            color: #2563eb;
+            font-size: 1.2rem;
+        }
+        .about-highlight {
+            background: #eef2ff;
+            padding: 1.5rem;
+            border-radius: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        }
+        .about-highlight h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #2563eb;
+        }
+        @media (max-width: 780px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* 技能区域 (标签云) */
+        .skills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .skill-badge {
+            background: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+        .skill-badge i {
+            color: #2563eb;
+            font-size: 1.1rem;
+        }
+        .skill-badge:hover {
+            transform: translateY(-3px);
+            border-color: #2563eb;
+            box-shadow: 0 12px 20px -12px rgba(37,99,235,0.2);
+        }
+
+        /* 项目卡片 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .project-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px -12px rgba(0, 0, 0, 0.07);
+            transition: all 0.3s ease;
+            border: 1px solid #edf2f7;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 40px -16px rgba(0, 0, 0, 0.15);
+            border-color: #cbdffc;
+        }
+        .project-img {
+            background: linear-gradient(120deg, #e2e8ff, #d9e3fe);
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 3rem;
+            color: #2563eb;
+        }
+        .project-info {
+            padding: 1.6rem;
+        }
+        .project-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.6rem;
+        }
+        .project-info p {
+            color: #475569;
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+        }
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+        }
+        .tech-tag {
+            background: #eef2ff;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #1e40af;
+        }
+        .project-link {
+            font-weight: 600;
+            color: #2563eb;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .project-link:hover {
+            gap: 10px;
+            color: #1e3a8a;
+        }
+
+        /* 联系区 (双栏) */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            background: #ffffffd9;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eef2ff;
+        }
+        .contact-info h3 {
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
+        }
+        .contact-detail {
+            margin: 1.8rem 0;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            background: #eef2ff;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            font-size: 1.2rem;
+        }
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+        .social-links a {
+            background: #f1f5f9;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: #334155;
+            transition: 0.2s;
+        }
+        .social-links a:hover {
+            background: #2563eb;
+            color: white;
+            transform: translateY(-3px);
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border-radius: 28px;
+            border: 1px solid #e2e8f0;
+            background: #fefefe;
+            font-family: inherit;
+            transition: 0.2s;
+            outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .btn-submit {
+            background: #2563eb;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.85rem;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .btn-submit:hover {
+            background: #1d4ed8;
+            transform: scale(0.98);
+        }
+        @media (max-width: 780px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+        }
+
+        /* 页脚 */
+        footer {
+            background: #f8fafc;
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #eef2f0;
+            color: #5b6e8c;
+            font-size: 0.9rem;
+        }
+
+        /* 一些小动画 */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .hero, .about-grid, .skills-wrapper, .projects-grid, .contact-grid {
+            animation: fadeUp 0.7s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">✨ Yuchen.Lin</div>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#about">关于</a></li>
+            <li><a href="#skills">技能</a></li>
+            <li><a href="#projects">作品</a></li>
+            <li><a href="#contact">联系</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <!-- 英雄区 Hero -->
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <div class="avatar">
+                <i class="fas fa-user-astronaut"></i>
+            </div>
+            <h1>林语晨 · Alex Lin</h1>
+            <div class="hero-tag">前端开发 / 创意技术人</div>
+            <div class="hero-desc">
+                构建美观、响应迅速的数字体验。热爱设计系统与交互动画，相信代码即艺术。
+            </div>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary"><i class="fas fa-paper-plane"></i> 联系我</a>
+                <a href="#projects" class="btn btn-outline"><i class="fas fa-code"></i> 查看作品</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于区 About -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>👋 你好！我是语晨，一名扎根于前端开发与创意编程的独立开发者。过去4年里，我热衷于将复杂逻辑转化为优雅界面，并与跨职能团队协作交付了10+个企业级应用。</p>
+                    <p>🎯 我相信优秀的网页不仅是工具，更是连接人与故事的桥梁。除了技术，我还热爱摄影与开源分享，常在工作坊中帮助初学者迈入编程世界。</p>
+                    <ul class="info-list">
+                        <li><i class="fas fa-map-marker-alt"></i> 坐标 · 上海 / 杭州</li>
+                        <li><i class="fas fa-graduation-cap"></i> 计算机科学与技术 · 浙江大学</li>
+                        <li><i class="fas fa-heart"></i> 兴趣 · 设计系统、交互艺术、羽毛球</li>
+                    </ul>
+                </div>
+                <div class="about-highlight">
+                    <h3>✨ 里程碑</h3>
+                    <div><span class="stat-number">30+</span> <br> 前端项目落地</div>
+                    <div style="margin: 1rem 0;"><span class="stat-number">8</span> <br> 团队技术分享 & 工作坊</div>
+                    <div><span class="stat-number">100%</span> <br> 响应式交付 & 无障碍优化</div>
+                    <p style="margin-top: 1.2rem; font-size: 0.9rem;">⚡ 时刻保持好奇，追求极致的用户体验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能区 Skills -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">技术栈 · 核心能力</h2>
+            <div class="skills-wrapper">
+                <div class="skill-badge"><i class="fab fa-html5"></i> HTML5/CSS3</div>
+                <div class="skill-badge"><i class="fab fa-js"></i> JavaScript (ES6+)</div>
+                <div class="skill-badge"><i class="fab fa-react"></i> React & Next.js</div>
+                <div class="skill-badge"><i class="fab fa-vuejs"></i> Vue3</div>
+                <div class="skill-badge"><i class="fab fa-tailwind"></i> Tailwind / SCSS</div>
+                <div class="skill-badge"><i class="fab fa-node-js"></i> Node.js / Express</div>
+                <div class="skill-badge"><i class="fas fa-database"></i> Firebase / MongoDB</div>
+                <div class="skill-badge"><i class="fab fa-git-alt"></i> Git & 协作流程</div>
+                <div class="skill-badge"><i class="fas fa-paintbrush"></i> Figma / 设计思维</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目作品 Projects -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">精选项目</h2>
+            <div class="projects-grid">
+                <!-- 卡片 1 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-cloud-moon"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>EcoNest 可持续社区</h3>
+                        <p>一个专注于环保生活方式的社交平台，提供碳足迹计算器和绿色资讯聚合。前端采用React + 动态地图交互。</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Leaflet</span>
+                            <span class="tech-tag">Tailwind</span>
+                        </div>
+                        <a href="#" class="project-link" onclick="alert('项目演示: 更多详情可查看线上案例 ✨'); return false;">探索项目 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- 卡片 2 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>DashFlow 数据驾驶舱</h3>
+                        <p>企业级数据分析看板，支持实时指标展示、暗色主题、图表联动。实现复杂表格与可视化的高效渲染。</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Vue3</span>
+                            <span class="tech-tag">ECharts</span>
+                            <span class="tech-tag">Pinia</span>
+                        </div>
+                        <a href="#" class="project-link" onclick="alert('演示版: 仪表盘交互体验 即将开放展示 🚀'); return false;">了解更多 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <!-- 卡片 3 -->
+                <div class="project-card">
+                    <div class="project-img">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>音悦·FM 概念站</h3>
+                        <p>沉浸式音乐分享网站，支持自定义播放列表、动态背景模糊效果，模拟黑胶唱片动画。</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">Framer Motion</span>
+                            <span class="tech-tag">CSS Art</span>
+                        </div>
+                        <a href="#" class="project-link" onclick="alert('🎧 沉浸体验开发中，欢迎关注后续开源！'); return false;">预览设计 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系区 Contact -->
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">保持连接</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>聊聊你的想法 ✨</h3>
+                    <p>无论是项目合作，还是技术交流，我都很乐意倾听并一起创造价值。</p>
+                    <div class="contact-detail">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>alex.lin@creativ.dev</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+86 130 0000 1234</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-discord"></i>
+                            <span>yuchen.dev (在线)</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub" onclick="alert('GitHub: 开源项目仓库展示中 🧑‍💻'); return false;"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn" onclick="alert('领英档案可进一步了解职业轨迹'); return false;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Twitter" onclick="alert('技术随笔与日常分享'); return false;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram" onclick="alert('摄影与生活瞬间'); return false;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <form id="demo-contact-form" onsubmit="handleFormSubmit(event)">
+                        <div class="form-group">
+                            <input type="text" placeholder="你的姓名 *" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="电子邮箱 *" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="留下你想说的话..." id="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> 发送消息</button>
+                        <p style="font-size: 0.75rem; margin-top: 12px; text-align: center; color: #5b6e8c;">✨ 演示模式 · 信息仅展示，不收集数据</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2025 林语晨 · 灵感与代码共舞 | 设计并构建于热爱之上</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;"><i class="fas fa-code-branch"></i> 持续迭代 ｜ 开放交流</p>
+    </div>
+</footer>
+
+<script>
+    // 联系表单提交弹窗 + 阻止实际发送 (纯前端演示)
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        const nameInput = document.getElementById('name').value.trim();
+        const emailInput = document.getElementById('email').value.trim();
+        const msgInput = document.getElementById('message').value.trim();
+        if (!nameInput || !emailInput || !msgInput) {
+            alert('📢 请完整填写姓名、邮箱和消息内容～');
+            return;
+        }
+        // 简单邮箱格式校验
+        const emailPattern = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/;
+        if (!emailPattern.test(emailInput)) {
+            alert('📧 邮箱格式似乎不太对，请重新输入～');
+            return;
+        }
+        alert(`✨ 感谢你的联系，${nameInput}！\n\n演示模式下消息不会真正发送，但我会珍视每一次交流。\n你可以通过邮箱 alex.lin@creativ.dev 直接找到我。`);
+        // 可选清空表单
+        document.getElementById('demo-contact-form').reset();
+    }
+
+    // 为所有导航锚点增加额外平滑 (CSS已平滑, 但确保任何手动点击无冲突)
+    document.querySelectorAll('.nav-links a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (targetId && targetId !== '#') {
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+
+    // 可选: 针对所有项目/社交链接占位，给个友好的演示提示 (已在a上内联)
+    // 避免控制台报错，全部优雅
+    console.log("个人主页加载完成 | 林语晨 · 创意开发者");
+</script>
+
+</body>
+</html>
